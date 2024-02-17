@@ -56,6 +56,7 @@ class UserService(
         val user = getUser(emailDto.value)
         println(user.password)
         return UserInfo(
+            user.id,
             user.email,
             user.password,
             user.userRole.name

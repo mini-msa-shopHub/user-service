@@ -1,5 +1,6 @@
 package com.example.userservice.feign
 
+import com.example.userservice.dto.PassportDto
 import com.example.userservice.dto.PasswordDto
 import com.example.userservice.util.CommonResponse
 import org.springframework.beans.factory.annotation.Qualifier
@@ -14,4 +15,6 @@ interface AuthFeignClient {
     @GetMapping("/encode-password")
     fun encodePassword(@RequestBody passwordDto: PasswordDto): CommonResponse<PasswordDto>
 
+    @GetMapping("/passport")
+    fun checkPassport(@RequestBody passportDto: PassportDto): CommonResponse<Boolean>
 }
