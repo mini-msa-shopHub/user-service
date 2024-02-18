@@ -1,4 +1,4 @@
-package com.example.userservice.dto
+package com.example.userservice.passport
 
 data class PassportDto(
     val email: String,

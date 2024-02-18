@@ -3,6 +3,7 @@ package com.example.userservice.service
 import com.example.userservice.domain.User
 import com.example.userservice.dto.*
 import com.example.userservice.feign.AuthFeignClient
+import com.example.userservice.passport.IntegrityEncoder
 import com.example.userservice.repository.UserRepository
 import com.example.userservice.util.NicknameGenerator
 import org.springframework.stereotype.Service
@@ -19,7 +20,9 @@ class UserService(
     fun joinUser(joinRequest: JoinRequest): UserResponse {
         checkEmail(joinRequest.email)
         val randomNickname = makeRandomNickname()
-        val password = authFeignClient.encodePassword(PasswordDto(joinRequest.password)).result
+        val password = authFeignClient.encodePassword(
+            PasswordDto(joinRequest.password, IntegrityEncoder.makePassport(joinRequest.email))
+        ).result
         val user = User(
             email = joinRequest.email,
             password = password.value,
