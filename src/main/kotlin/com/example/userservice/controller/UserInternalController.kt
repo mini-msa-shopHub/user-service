@@ -7,7 +7,6 @@ import com.example.userservice.passport.IntegrityEncoder
 import com.example.userservice.passport.PassportDto
 import com.example.userservice.service.UserService
 import com.example.userservice.util.CommonResponse
-import com.example.userservice.util.EmptyDto
 import jakarta.servlet.http.HttpServletRequest
 import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.*
@@ -26,10 +25,10 @@ class UserInternalController(
     }
 
     @PatchMapping("/refresh-token")
-    fun updateRefreshToken(@RequestBody updateRefreshRequest: UpdateRefreshRequest): CommonResponse<EmptyDto> {
+    fun updateRefreshToken(@RequestBody updateRefreshRequest: UpdateRefreshRequest): CommonResponse<UserInfo> {
         checkPassport(updateRefreshRequest.passportDto)
-        userService.updateRefreshToken(updateRefreshRequest)
-        return CommonResponse.EMPTY
+        val userInfo = userService.updateRefreshToken(updateRefreshRequest)
+        return CommonResponse(userInfo)
     }
 
     private fun checkPassport(passportDto: PassportDto) {

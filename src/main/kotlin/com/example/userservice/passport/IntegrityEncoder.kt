@@ -16,13 +16,13 @@ class IntegrityEncoder {
             )
         }
 
-        private fun encodeInfo(email: String): String {
+        private fun encodeInfo(input: String): String {
             try {
                 val instance = Mac.getInstance(ALGORITHM)
                 val keySpec = SecretKeySpec("this-is-secret".toByteArray(), ALGORITHM)
                 instance.init(keySpec)
-                instance.update(email.toByteArray())
-                return Base64.getEncoder().encodeToString(instance.doFinal(email.toByteArray()))
+                instance.update(input.toByteArray())
+                return Base64.getEncoder().encodeToString(instance.doFinal(input.toByteArray()))
             } catch (e: Exception) {
                 println(e.message)
                 return ""

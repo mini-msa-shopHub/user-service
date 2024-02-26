@@ -57,7 +57,6 @@ class UserService(
 
     fun getUserInfo(emailDto: EmailDto): UserInfo {
         val user = getUser(emailDto.value)
-        println(user.password)
         return UserInfo(
             user.id,
             user.email,
@@ -67,9 +66,15 @@ class UserService(
     }
 
     @Transactional
-    fun updateRefreshToken(updateRefreshRequest: UpdateRefreshRequest) {
+    fun updateRefreshToken(updateRefreshRequest: UpdateRefreshRequest): UserInfo {
         val user = getUser(updateRefreshRequest.email)
         user.updateRefreshToken(updateRefreshRequest.refreshToken)
+        return UserInfo(
+            user.id,
+            user.email,
+            "",
+            user.userRole.name
+        )
     }
 
     private fun getUser(email: String) =
